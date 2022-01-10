@@ -1,0 +1,63 @@
+div {
+    width: 100%;
+    height: 100%;
+}
+h1 {
+    height: 50px;
+    color: violet;
+}
+.flex-container {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex-center {
+    margin: auto;
+    align-self: center;
+    text-align: center;
+}
+.calendar {
+    width: 65%;
+    height: 50%;
+    
+}
+.flex-flow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+#dayTitles {
+    height: 16%;
+}
+
+#days {
+    margin-top: 5px;
+    height: calc(84% - 5px);
+}
+
+#dayTitles > div {
+    display: table;
+    width: 14%;
+    height: 100%;
+    background-color: blue;
+}
+
+#dayTitles > div > h2 {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#days > div {
+    display: table;
+    width: 14%;
+    height: 16%;
+    background-color: blue;
+}
+
+#days > div > h2 {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
