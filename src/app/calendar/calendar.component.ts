@@ -10,11 +10,10 @@ import { ViewEncapsulation } from '@angular/core';
 export class CalendarComponent implements OnInit {
 
   today = new Date();
-  firstDayOfMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1).getDay();
-  lastDayOfMonth = new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0);
   currentMonth = this.today.getMonth();
-  
-
+  currentYear = this.today.getFullYear();
+  firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+  lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
 
   constructor() { }
 
@@ -60,11 +59,25 @@ export class CalendarComponent implements OnInit {
   }
 
   getNextCalendar() {
-    this.currentMonth++;
+    if(this.currentMonth == 11){
+      this.currentYear++;
+      this.currentMonth = 0;
+    }
+    else{
+      this.currentMonth++;
+    }
+    this.createCalendar();
   }
 
   getLastCalendar() {
-    this.currentMonth--;
+    if(this.currentMonth == 0){
+      this.currentYear--;
+      this.currentMonth = 11;
+    }
+    else{
+      this.currentMonth--;
+    }
+    this.createCalendar();
   }
 
 }
