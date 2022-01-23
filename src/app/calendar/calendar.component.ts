@@ -14,48 +14,35 @@ export class CalendarComponent implements OnInit {
   currentYear = this.today.getFullYear();
   firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
   lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+  days = new Array();
 
   constructor() { }
 
   ngOnInit(): void {
+    this.createDays();
   }
 
-  createCalendar() {
-    this.clearCalendar();
+  createDays() {
     let el;
-    let nestedEl;
-
     for(let i = 0; i < 42; i++){
-      el = document.createElement("div");
-      nestedEl = document.createElement("h2");
+      el = document.createElement("h2"); 
       if(i < this.firstDayOfMonth)
-        nestedEl.innerText = "";
+        el.innerText = "";
       if(i >= this.firstDayOfMonth && i < this.lastDayOfMonth.getDate() + this.firstDayOfMonth){
         let text = i - this.firstDayOfMonth + 1;
-        nestedEl.innerText = text.toString();
+        el.innerText = text.toString();
       }
       if(i > this.lastDayOfMonth.getDate() + this.firstDayOfMonth - 1)
-        nestedEl.innerText = "";
-      el.appendChild(nestedEl);
-      document.getElementById("days")?.appendChild(el);
+        el.innerText = "";
+      this.days.push(el);
     }
+    this.cullDays();
   }
 
   clearCalendar() {
-    let days = document.getElementById("days");
-    while(days?.firstChild){
-      days.lastChild?.remove();
+    while(this.days[0] != null){
+      this.days.pop();
     }
-  }
-
-  findFirstDay(year: number, month: number) {
-    let firstDay = new Date(year, month, 1);
-    return firstDay.getDay();
-  }
-
-  findFirstDay1() {
-    let firstDay = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
-    return firstDay.getDay();
   }
 
   getNextCalendar() {
@@ -66,7 +53,10 @@ export class CalendarComponent implements OnInit {
     else{
       this.currentMonth++;
     }
-    this.createCalendar();
+    this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    this.lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    this.clearCalendar();
+    this.createDays();
   }
 
   getLastCalendar() {
@@ -77,7 +67,21 @@ export class CalendarComponent implements OnInit {
     else{
       this.currentMonth--;
     }
-    this.createCalendar();
+    this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    this.lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    this.clearCalendar();
+    this.createDays();
+  }
+
+  cullDays() {
+    if (this.days[36].innerText != ""){
+      return;
+    }
+    else{
+      for(let i = 42; i > 35; i--) {
+        this.days.pop();
+      }
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 <h1 class="flex-center">Mood Calendar</h1>
-<button class="flex-center" (click)="getLastCalendar()">-</button>
-<button class="flex-center" (click)="getNextCalendar()">+</button>
+<button class="flex-center" (click)="getLastCalendar()">last month</button>
+<button class="flex-center" (click)="getNextCalendar()">next month</button>
 <div class="calendar flex-center">
     <div id="dayTitles" class="flex-flow">
         <div><h2>S</h2></div>
@@ -12,6 +12,8 @@
         <div><h2>S</h2></div>
     </div>
     <div id="days" class="flex-flow">
-        {{ createCalendar() }}
+        <div *ngFor="let day of days; let i = index">
+            <h2>{{ days[i].innerText }}</h2>
+        </div>
     </div>
 </div>
