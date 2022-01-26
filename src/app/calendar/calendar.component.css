@@ -6,6 +6,21 @@ h1 {
     height: 50px;
     color: violet;
 }
+div#top {
+    margin-bottom: 10px;
+    height: 28px;
+    width: 30%;
+}
+#top > h2 {
+    color: violet;
+}
+#chevron {
+    width: 25px;
+}
+#chevron:hover {
+    color: rgb(255, 205, 255);
+    cursor: pointer;
+}
 .flex-container {
     justify-content: center;
     display: flex;
@@ -60,4 +75,9 @@ h1 {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+}
+
+.select:hover {
+    background-color: rgb(0, 0, 190);
+    cursor: pointer;
 }

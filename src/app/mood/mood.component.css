@@ -1,0 +1,25 @@
+.dreadful {
+    background-color: red;
+}
+
+.bad {
+    background-color: orange;
+}
+
+.neutral {
+    background-color: darkgrey;
+}
+
+.good {
+    background-color: yellow;
+}
+
+.great {
+    background-color: green;
+}
+
+div {
+    position: absolute;
+    width: 64.7%;
+    height: 41%;
+}

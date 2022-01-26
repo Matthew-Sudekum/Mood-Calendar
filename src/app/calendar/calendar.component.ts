@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -15,6 +15,23 @@ export class CalendarComponent implements OnInit {
   firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
   lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
   days = new Array();
+  monthName = this.today.toLocaleString("default", { month:"long" });
+  shortMonth: boolean = false;
+
+  @Input() displayMoodSelect: boolean = false;
+
+  displayMoods(int: number){
+    if(this.days[int].innerText != '') {
+      console.log(int + ", " + this.days[int].innerText);
+      this.displayMoodSelect = true;
+    }
+    else {
+      console.log(int);
+    }
+  }
+  displayChangedHandler(val: boolean){
+    this.displayMoodSelect = val;
+  }
 
   constructor() { }
 
@@ -25,18 +42,30 @@ export class CalendarComponent implements OnInit {
   createDays() {
     let el;
     for(let i = 0; i < 42; i++){
-      el = document.createElement("h2"); 
-      if(i < this.firstDayOfMonth)
-        el.innerText = "";
-      if(i >= this.firstDayOfMonth && i < this.lastDayOfMonth.getDate() + this.firstDayOfMonth){
-        let text = i - this.firstDayOfMonth + 1;
-        el.innerText = text.toString();
+      if(i > this.lastDayOfMonth.getDate() + this.firstDayOfMonth - 1){
+        if(i == 35){ //35 is start of last row
+          this.shortMonth = true;
+          i = 42;          
+        }
+        else{
+          if(this.shortMonth != false)
+            this.shortMonth = false;
+          el = document.createElement("h2");
+          el.innerText = "";
+          this.days.push(el);
+        }
       }
-      if(i > this.lastDayOfMonth.getDate() + this.firstDayOfMonth - 1)
-        el.innerText = "";
-      this.days.push(el);
+      else{
+        el = document.createElement("h2"); 
+        if(i < this.firstDayOfMonth)
+          el.innerText = "";
+        if(i >= this.firstDayOfMonth && i < this.lastDayOfMonth.getDate() + this.firstDayOfMonth){
+          let text = i - this.firstDayOfMonth + 1;
+          el.innerText = text.toString();
+        }
+        this.days.push(el);
+      }
     }
-    this.cullDays();
   }
 
   clearCalendar() {
@@ -53,8 +82,7 @@ export class CalendarComponent implements OnInit {
     else{
       this.currentMonth++;
     }
-    this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
-    this.lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    this.setDateInfo();
     this.clearCalendar();
     this.createDays();
   }
@@ -67,21 +95,14 @@ export class CalendarComponent implements OnInit {
     else{
       this.currentMonth--;
     }
-    this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
-    this.lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    this.setDateInfo();
     this.clearCalendar();
     this.createDays();
   }
 
-  cullDays() {
-    if (this.days[36].innerText != ""){
-      return;
-    }
-    else{
-      for(let i = 42; i > 35; i--) {
-        this.days.pop();
-      }
-    }
+  setDateInfo() {
+    this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    this.lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    this.monthName = new Date(this.currentYear, this.currentMonth, 1).toLocaleString("default", { month:"long" });
   }
-
 }
