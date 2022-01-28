@@ -18,26 +18,17 @@ export class CalendarComponent implements OnInit {
   monthName = this.today.toLocaleString("default", { month:"long" });
   shortMonth: boolean = false;
 
-  @Input() displayMoodSelect: boolean = false;
-
-  displayMoods(int: number){
-    if(this.days[int].innerText != '') {
-      console.log(int + ", " + this.days[int].innerText);
-      this.displayMoodSelect = true;
-    }
-    else {
-      console.log(int);
-    }
-  }
-  displayChangedHandler(val: boolean){
-    this.displayMoodSelect = val;
-  }
+  @Input() displayMoods: boolean = false;
+  currentDay: Date;
 
   constructor() { }
 
   ngOnInit(): void {
     this.createDays();
   }
+
+
+  //Calendar Building
 
   createDays() {
     let el;
@@ -62,6 +53,8 @@ export class CalendarComponent implements OnInit {
         if(i >= this.firstDayOfMonth && i < this.lastDayOfMonth.getDate() + this.firstDayOfMonth){
           let text = i - this.firstDayOfMonth + 1;
           el.innerText = text.toString();
+          if(i == this.today.getDate() + this.firstDayOfMonth)
+            el.classList.add("today");
         }
         this.days.push(el);
       }
@@ -104,5 +97,35 @@ export class CalendarComponent implements OnInit {
     this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
     this.lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
     this.monthName = new Date(this.currentYear, this.currentMonth, 1).toLocaleString("default", { month:"long" });
+  }
+
+  classSetting(day: number) {
+    if(this.days[day].innerText != '') {
+      if(this.currentMonth == this.today.getMonth() && this.days[day].innerText == this.today.getDate())
+        return 'select today';
+      else
+        return 'select';
+    }
+    else {
+      return '';
+    }
+  }
+
+
+  //Component Sharing
+
+  displayDayMoods(int: number){
+    if(this.days[int].innerText != '') {
+      this.displayMoods = true;
+      this.currentDay = new Date(this.currentYear, this.currentMonth, this.days[int].innerText);
+      console.log(this.currentDay);
+    }
+    else {
+      console.log(int);
+    }
+  }
+
+  displayChangedHandler(val: boolean){
+    this.displayMoods = val;
   }
 }

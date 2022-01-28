@@ -1,3 +1,15 @@
-<div class="neutral">
-<button (click)="closeDisplay()">close</button>
+<div id="display">
+    <h2 id="close" (click)="closeDisplay()">X</h2>
+    <h2>{{ showDayTitle() }}</h2>
+    <p>How did you feel today?</p>
+    <div id="moodSelection">
+        <div 
+            id="mood"
+            *ngFor="let mood of moods"
+            [ngClass]="moodSetting(moods.indexOf(mood))"
+        >
+            {{ capitalizeFirstLetter(moods[moods.indexOf(mood)]) }}
+        </div>
+    </div>
+    
 </div>

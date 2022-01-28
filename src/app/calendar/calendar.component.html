@@ -15,9 +15,19 @@
         <div><h2>S</h2></div>
     </div>
     <div id="days" class="flex-flow">
-        <app-mood *ngIf="displayMoodSelect" [display]=displayMoodSelect (displayChanged)="displayChangedHandler($event)"></app-mood>
+        <app-mood 
+            *ngIf="displayMoods" 
+            [display]=displayMoods (displayChanged)="displayChangedHandler($event)"
+            [dayNumber]="currentDay"
+        >
+        </app-mood>
         <div *ngFor="let day of days; let i = index" [style.height]="shortMonth ? '19%' : '16%'">
-            <h2 [className]="days[i].innerText != '' ? 'select' : ''" (click)="displayMoods(i)">{{ days[i].innerText }}</h2>
+            <h2 
+                [ngClass]="classSetting(i)" 
+                (click)="displayDayMoods(i)"
+            >
+                {{ days[i].innerText }}
+            </h2>
         </div>
 
     </div>
