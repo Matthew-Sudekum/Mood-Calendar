@@ -8,9 +8,11 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 })
 export class MoodComponent implements OnInit {
 
-  @Input() display: boolean;
   @Output() displayChanged = new EventEmitter<boolean>();
+  
   @Input() dayNumber: Date;
+
+  @Output() moodSelection = new EventEmitter<string>();
 
   moodColors = ['red', 'orange', 'grey', 'yellow', 'green'];
   moods = ['dreadful', 'bad', 'fine', 'good', 'great'];
@@ -22,6 +24,11 @@ export class MoodComponent implements OnInit {
 
   closeDisplay(){
     this.displayChanged.emit(false);
+  }
+
+  chooseMood(mood: string){
+    this.moodSelection.emit(mood);
+    this.closeDisplay();
   }
 
   showDayTitle(){

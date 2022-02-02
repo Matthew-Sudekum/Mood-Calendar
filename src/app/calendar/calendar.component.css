@@ -1,3 +1,10 @@
+:root {
+    --r: 0;
+    --g: 0;
+    --b: 255;
+    --darkness: 0.75;
+}
+
 .flex-container {
     justify-content: center;
     display: flex;
@@ -61,33 +68,63 @@ div#top {
     display: table;
     width: 14%;
     height: 100%;
-    background-color: blue;
 }
 
 #dayTitles > div > h2 {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    background-color: rgb(var(--r), var(--g), var(--b));
 }
 
 #days > div {
     display: table;
     width: 14%;
     height: 16%;
-    background-color: blue;
 }
 
 #days > div > h2 {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    background-color: rgb(var(--r), var(--g), var(--b));
 }
 
-.select:hover {
-    background-color: rgb(0, 0, 190);
+#days > div > h2.select:hover {
+    background-color: rgb(calc(var(--r) * var(--darkness)), calc(var(--g) * var(--darkness)), calc(var(--b) * var(--darkness)));
     cursor: pointer;
 }
 
 .today {
-    color: hsl(300, 100%, 67%)
+    color: rgb(calc(255 * var(--darkness)), calc(87 * var(--darkness)), calc(255 * var(--darkness)));
+}
+
+.dreadful {
+    --r: 163;
+    --g: 0;
+    --b: 0;
+}
+
+.bad {
+    --r: 204;
+    --g: 133;
+    --b: 0;
+}
+
+.fine {
+    --r: 204;
+    --g: 204;
+    --b: 0;
+}
+
+.good {
+    --r: 0;
+    --g: 168;
+    --b: 0;
+}
+
+.great {
+    --r: 0;
+    --g: 168;
+    --b: 151;
 }

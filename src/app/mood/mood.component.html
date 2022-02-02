@@ -7,6 +7,7 @@
             id="mood"
             *ngFor="let mood of moods"
             [ngClass]="moodSetting(moods.indexOf(mood))"
+            (click)="chooseMood(mood)"
         >
             {{ capitalizeFirstLetter(moods[moods.indexOf(mood)]) }}
         </div>

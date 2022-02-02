@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
+import { DayMoodModel } from '../objectModels/dayMood'; 
 
 @Component({
   selector: 'app-calendar',
@@ -10,16 +11,18 @@ import { ViewEncapsulation } from '@angular/core';
 export class CalendarComponent implements OnInit {
 
   today = new Date();
+  currentDay: Date;
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
   firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
   lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
-  days = new Array();
   monthName = this.today.toLocaleString("default", { month:"long" });
-  shortMonth: boolean = false;
 
-  @Input() displayMoods: boolean = false;
-  currentDay: Date;
+  shortMonth: boolean = false;
+  displayMoods: boolean = false;
+
+  days = new Array();
+  moodsAssigned: DayMoodModel[] = [];
 
   constructor() { }
 
@@ -100,32 +103,78 @@ export class CalendarComponent implements OnInit {
   }
 
   classSetting(day: number) {
+    let classes = '';
     if(this.days[day].innerText != '') {
-      if(this.currentMonth == this.today.getMonth() && this.days[day].innerText == this.today.getDate())
-        return 'select today';
-      else
-        return 'select';
+      let dayHolder = new Date(this.currentYear, this.currentMonth, day - this.firstDayOfMonth + 1);
+      
+      if(this.currentMonth == this.today.getMonth() && this.days[day].innerText == this.today.getDate()) {
+        classes = 'select today';
+        if(dayHolder != null && day == dayHolder.getDate() + this.firstDayOfMonth - 1) {
+          classes += ' ' + this.returnMood(day - this.firstDayOfMonth + 1);
+        }
+      }
+      else {
+        classes = 'select';
+        if(dayHolder != null && day == dayHolder.getDate() + this.firstDayOfMonth - 1) {
+          classes += ' ' + this.returnMood(day - this.firstDayOfMonth + 1);
+        }
+      }
     }
     else {
-      return '';
+      classes = '';
     }
+    return classes;
   }
 
 
-  //Component Sharing
+  //Calander Filling
 
-  displayDayMoods(int: number){
-    if(this.days[int].innerText != '') {
+  displayDayMoods(day: number) {
+    if(this.days[day].innerText != '') {
       this.displayMoods = true;
-      this.currentDay = new Date(this.currentYear, this.currentMonth, this.days[int].innerText);
-      console.log(this.currentDay);
+      this.currentDay = new Date(this.currentYear, this.currentMonth, this.days[day].innerText);
+    }
+    else { }
+  }
+
+  displayChangedHandler(val: boolean) {
+    this.displayMoods = val;
+  }
+
+  moodSelectionEventHandler(moodName: string) {
+    this.addMood(moodName);
+  }
+
+  addMood(moodName: string) {
+    console.log(this.currentDay);
+    let datestring = this.currentDay.toLocaleDateString('default');
+    let obj: DayMoodModel = { date: datestring, mood: moodName };
+    if(this.moodsAssigned.length > 0) {
+      for(let i = 0; i < this.moodsAssigned.length; i++) {
+        if(this.moodsAssigned[i].date == datestring) {
+          this.moodsAssigned[i].mood = moodName;
+          i = this.moodsAssigned.length;
+        }
+        else if(i == this.moodsAssigned.length - 1 && this.moodsAssigned[i].date != datestring) {
+          this.moodsAssigned.push(obj);
+        }
+      }
     }
     else {
-      console.log(int);
+      this.moodsAssigned.push(obj);
     }
   }
 
-  displayChangedHandler(val: boolean){
-    this.displayMoods = val;
+  returnMood(day: number) {
+    let dateString = new Date(this.currentYear, this.currentMonth, day).toLocaleDateString('default');
+    let returnStatement = '';
+    for(let i = 0; i < this.moodsAssigned.length; i++) {
+      if(this.moodsAssigned[i].date == dateString) {
+        returnStatement = ' ' + this.moodsAssigned[i].mood;
+        i = this.moodsAssigned.length;
+      }
+      else if (i == this.moodsAssigned.length - 1 && this.moodsAssigned[i].date != dateString) { }
+    }
+    return returnStatement;
   }
 }

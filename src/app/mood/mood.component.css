@@ -1,29 +1,30 @@
 .dreadful {
-    background-color: hsl(0, 100%, 32%);
+    background-color: rgb(163, 0, 0);
 }
 
 .bad {
-    background-color: hsl(39, 100%, 40%);
+    background-color: rgb(204, 133, 0);
 }
 
 .fine {
-    background-color: hsl(0, 0%, 50%);
+    background-color: rgb(204, 204, 0);
 }
 
 .good {
-    background-color: hsl(60, 100%, 33%);
+    background-color: rgb(0, 168, 0);
 }
 
 .great {
-    background-color: hsl(120, 100%, 17%);
+    background-color: rgb(0, 168, 151)
 }
 
 #display {
+    z-index: 1;
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 74.6%;
-    height: calc(54% - 5px);
+    width: 74.65%;
+    height: calc(54.25% - 5px);
     background-color: blue;
 }
 
@@ -44,6 +45,7 @@
 }
 
 h2 {
+    
     display: block;
     margin: 10px 0 30px;
     text-align: center;

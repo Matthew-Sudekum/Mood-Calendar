@@ -17,13 +17,14 @@
     <div id="days" class="flex-flow">
         <app-mood 
             *ngIf="displayMoods" 
-            [display]=displayMoods (displayChanged)="displayChangedHandler($event)"
+            (displayChanged)="displayChangedHandler($event)"
             [dayNumber]="currentDay"
+            (moodSelection)="moodSelectionEventHandler($event)"
         >
         </app-mood>
         <div *ngFor="let day of days; let i = index" [style.height]="shortMonth ? '19%' : '16%'">
             <h2 
-                [ngClass]="classSetting(i)" 
+                [ngClass]="classSetting(i)"
                 (click)="displayDayMoods(i)"
             >
                 {{ days[i].innerText }}
