@@ -3,7 +3,7 @@
 }
 
 .bad {
-    background-color: rgb(204, 133, 0);
+    background-color: rgb(230, 149, 0);
 }
 
 .fine {
@@ -88,5 +88,10 @@ p {
     #mood {
         width: 100px;
         height: 100px;
+    }
+}
+@media only screen and (max-width: 510px) {
+    #display {
+        width: 79.65%;
     }
 }

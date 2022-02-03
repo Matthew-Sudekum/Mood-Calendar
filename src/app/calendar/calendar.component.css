@@ -45,7 +45,6 @@ div#top {
 .calendar {
     width: 75%;
     height: 65%;
-    
 }
 
 .flex-flow {
@@ -106,8 +105,8 @@ div#top {
 }
 
 .bad {
-    --r: 204;
-    --g: 133;
+    --r: 230;
+    --g: 149;
     --b: 0;
 }
 
@@ -127,4 +126,19 @@ div#top {
     --r: 0;
     --g: 168;
     --b: 151;
+}
+
+@media only screen and (max-width: 910px) {
+    div#top {
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 510px) {
+    div#top {
+        width: 90%;
+    }
+    .calendar {
+        width: 80%;
+        height: 65%;
+    }
 }
