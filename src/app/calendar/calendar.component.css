@@ -97,6 +97,9 @@ div#top {
 .today {
     color: rgb(calc(255 * var(--darkness)), calc(87 * var(--darkness)), calc(255 * var(--darkness)));
 }
+.today:hover {
+    color: hsl(300, 100%, 70%);
+}
 
 .dreadful {
     --r: 163;
